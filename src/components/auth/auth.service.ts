@@ -40,9 +40,8 @@ export class AuthService {
     private readonly addressRepository: AddressRepository,
 
     private jwtService: JwtService,
-
-    @Inject(CACHE_MANAGER) private cacheManager: Cache,
-  ) {}
+  ) // @Inject(CACHE_MANAGER) private cacheManager: Cache,
+  {}
   async register(request: UserRegisterRequest): Promise<any> {
     const userPhone = await this.userRepository.findOne({
       where: {
@@ -76,9 +75,9 @@ export class AuthService {
     const token = this.jwtService.sign({ id: user.id });
     const refreshToken = user.getRefreshToken();
 
-    await this.cacheManager.set(user.id.toString(), refreshToken, {
-      ttl: 10000000,
-    });
+    // await this.cacheManager.set(user.id.toString(), refreshToken, {
+    //   ttl: 10000000,
+    // });
 
     return new ResponseBuilder({ token, refreshToken })
       .withCode(ResponseCodeEnum.CREATED)
@@ -147,9 +146,9 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user.id });
     const refreshToken = user.getRefreshToken();
-    await this.cacheManager.set(user.id.toString(), refreshToken, {
-      ttl: 10000000,
-    });
+    // await this.cacheManager.set(user.id.toString(), refreshToken, {
+    //   ttl: 10000000,
+    // });
 
     return new ResponseBuilder({ token, refreshToken })
       .withMessage(ResponseMessageEnum.SUCCESS)
@@ -161,14 +160,14 @@ export class AuthService {
     try {
       const verify: any = jwt.verify(request.refreshToken, 'abcbacb');
 
-      const check = await this.cacheManager.get(verify?.id);
+      // const check = await this.cacheManager.get(verify?.id);
 
-      if (!check) {
-        return new ResponseBuilder()
-          .withMessage(ResponseMessageEnum.INVALID_REFRESH_TOKEN)
-          .withCode(ResponseCodeEnum.BAD_REQUEST)
-          .build();
-      }
+      // if (!check) {
+      //   return new ResponseBuilder()
+      //     .withMessage(ResponseMessageEnum.INVALID_REFRESH_TOKEN)
+      //     .withCode(ResponseCodeEnum.BAD_REQUEST)
+      //     .build();
+      // }
 
       const token = this.jwtService.sign({ id: verify?.id });
 

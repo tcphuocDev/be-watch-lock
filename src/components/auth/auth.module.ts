@@ -17,11 +17,11 @@ import { AddressEntity } from '@entities/address.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserRepository, AddressRepository]),
-    CacheModule.register({
-      store: redisStore,
-      host: 'localhost',
-      port: 6379,
-    }),
+    // CacheModule.register({
+    //   store: redisStore,
+    //   host: 'localhost',
+    //   port: 6379,
+    // }),
     PassportModule,
     JwtModule.register({
       secret: jwtConstants.secret,
