@@ -1,5 +1,6 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { GenderEnum } from '@enums/gender.enum';
+import { Transform } from 'class-transformer';
 
 export class UserRegisterRequest {
   @IsNotEmpty()
@@ -15,6 +16,7 @@ export class UserRegisterRequest {
   fullname: string;
 
   @IsNotEmpty()
+  @Transform(({ value }) => +value)
   @IsEnum(GenderEnum)
   gender: number;
 
